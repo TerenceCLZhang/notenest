@@ -12,8 +12,8 @@ A simple web app where users can:
 
 - **Backend**: Node.js + Express.js
 - **Database**: MongoDB with Mongoose
-- **Authentication**: JWT or sessions (you choose)
-- **Frontend (Optional)**: HTML/CSS + EJS, or use a React frontend if time permits
+- **Authentication**: JWT
+- **Frontend (Optional)**: React
 
 ---
 
@@ -22,24 +22,21 @@ A simple web app where users can:
 ### ✅ Day 1: Setup & Basic CRUD
 
 - [x] Set up Node.js, Express, MongoDB, Mongoose
-- [ ] Define Mongoose models: `User`, `Note`
-- [ ] Create RESTful API routes:
-
-  - `POST /notes` – Create a note
-  - `GET /notes` – List user's notes
-  - `PUT /notes/:id` – Edit a note
-  - `DELETE /notes/:id` – Delete a note
-
-- [ ] Test API with Postman
+- [x] Define Mongoose models: `User`, `Note`
+- [x] Create RESTful API routes:
+  - [x] `POST /notes` – Create a note
+  - [x] `GET /notes` – List user's notes
+  - [x] `PUT /notes/:id` – Edit a note
+  - [x] `DELETE /notes/:id` – Delete a note
 
 ---
 
 ### 🔐 Day 2: Authentication & User Management
 
-- [ ] User Registration (`POST /register`)
-- [ ] User Login (`POST /login`)
-- [ ] Protect note routes using JWT or session auth
-- [ ] Only allow users to access their own notes
+- [x] User Registration (`POST /register`)
+- [x] User Login (`POST /login`)
+- [x] Protect note routes using JWT
+- [x] Only allow users to access their own notes
 
 ---
 
@@ -52,8 +49,8 @@ A simple web app where users can:
 
 - Option 2: Polish backend
 
-  - [ ] Add error handling
-  - [ ] Add timestamps
+  - [x] Add error handling
+  - [x] Add timestamps
   - [ ] Add basic search/filter by title
 
 ---
@@ -82,7 +79,7 @@ project/
 
 ## 🌟 Stretch Goals (if time)
 
-- Password hashing with **bcrypt**
-- Deploy to **Render**, **Vercel**, or **Railway**
-- Use **MongoDB Atlas** instead of local DB
-- Add tags or categories for notes
+- [x] Password hashing with **bcrypt**
+- [ ] Deploy to **Netlify**
+- [x] Use **MongoDB Atlas** instead of local DB
+- [ ] Add tags or categories for notes
