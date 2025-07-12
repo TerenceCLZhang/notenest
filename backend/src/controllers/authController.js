@@ -7,7 +7,7 @@ const RefreshToken = require("../models/RefreshToken");
 // Helper functions for JWT tokens
 const generateAccessToken = (user) => {
   return jwt.sign({ username: user.username }, process.env.JWT_ACCESS_SECRET, {
-    expiresIn: "15s",
+    expiresIn: "15m",
   });
 };
 
@@ -126,7 +126,7 @@ const logout = async (req, res) => {
   const refreshToken = req.body.token;
 
   try {
-    await RefreshToken.deleteOne({ token: refreshToken });
+    await RefreshToken.deleteOne({ token: refreshToken }); // Remove refresh token from database
     res.sendStatus(204);
   } catch (error) {
     res.status(500).json({ error: "Internal server error." });
