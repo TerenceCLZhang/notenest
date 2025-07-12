@@ -2,16 +2,22 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
+const RefreshToken = require("../models/RefreshToken");
 
 // Helper functions for JWT tokens
 const generateAccessToken = (user) => {
   return jwt.sign({ username: user.username }, process.env.JWT_ACCESS_SECRET, {
-    expiresIn: "15m",
+    expiresIn: "15s",
   });
 };
 
-const generateRefreshToken = (user) => {
-  return jwt.sign({ username: user.username }, process.env.JWT_REFRESH_SECRET);
+const generateRefreshToken = async (user) => {
+  const token = jwt.sign(
+    { username: user.username },
+    process.env.JWT_REFRESH_SECRET
+  );
+  await RefreshToken.create({ username: user.username, token });
+  return token;
 };
 
 const register = async (req, res) => {
@@ -44,8 +50,8 @@ const register = async (req, res) => {
     await newUser.save();
 
     // Create JWT after user is created
-    const accessToken = generateAccessToken(user);
-    const refreshToken = generateRefreshToken(user);
+    const accessToken = generateAccessToken(newUser);
+    const refreshToken = await generateRefreshToken(newUser);
 
     return res.json({
       message: "User created and logged in",
@@ -86,9 +92,45 @@ const login = async (req, res) => {
 
   // Authenticate with JWT
   const accessToken = generateAccessToken(user);
-  const refreshToken = generateRefreshToken(user);
+  const refreshToken = await generateRefreshToken(user);
 
   res.json({ accessToken, refreshToken });
 };
 
-module.exports = { register, login };
+const token = async (req, res) => {
+  const refreshToken = req.body.token;
+
+  // Check if valid refresh token
+  if (!refreshToken) {
+    return res.status(401).json({ error: "Refresh token not found." });
+  }
+
+  // Check if refresh token is valid
+  const storedToken = await RefreshToken.findOne({ token: refreshToken });
+  if (!storedToken) {
+    return res.status(403).json({ error: "Forbidden." });
+  }
+
+  jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, user) => {
+    if (err) {
+      return res.status(403).json({ error: "Forbidden." });
+    }
+
+    // Create new access token
+    const accessToken = generateAccessToken(user);
+    res.json({ accessToken });
+  });
+};
+
+const logout = async (req, res) => {
+  const refreshToken = req.body.token;
+
+  try {
+    await RefreshToken.deleteOne({ token: refreshToken });
+    res.sendStatus(204);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error." });
+  }
+};
+
+module.exports = { register, login, token, logout };

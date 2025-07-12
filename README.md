@@ -55,28 +55,6 @@ A simple web app where users can:
 
 ---
 
-## 📁 Suggested Folder Structure
-
-```bash
-project/
-│
-├── models/
-│   ├── User.js
-│   └── Note.js
-│
-├── routes/
-│   ├── auth.js
-│   └── notes.js
-│
-├── middleware/
-│   └── auth.js
-│
-├── server.js
-└── .env
-```
-
----
-
 ## 🌟 Stretch Goals (if time)
 
 - [x] Password hashing with **bcrypt**
