@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import "../styles/auth.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import Form from "../components/auth/Form";
+import UserForm from "../components/auth/UserForm";
 
 const useQuery = () => new URLSearchParams(useLocation().search);
 
@@ -40,7 +39,7 @@ const Auth = () => {
           </span>
         </header>
         <main className="lg:w-[75%] xl:w-[50%]">
-          <Form mode={mode} />
+          <UserForm mode={mode} />
         </main>
 
         <footer className="mt-7">

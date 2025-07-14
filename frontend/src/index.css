@@ -44,4 +44,29 @@
   .transition-animation {
     @apply transition duration-150 ease-in;
   }
+
+  .form {
+    @apply flex flex-col gap-5 md:gap-10;
+  }
+
+  .form-input {
+    @apply flex flex-col gap-2;
+  }
+
+  .form-input label {
+    @apply font-semibold;
+  }
+
+  .form-input input,
+  .form-input textarea {
+    @apply rounded-lg py-3 px-5 bg-gray-200 focus:outline-2 focus:outline-black;
+  }
+
+  .error {
+    @apply text-red-600 text-sm;
+  }
+
+  .form-submit-btn {
+    @apply rounded-xl py-2 mt-3 font-semibold md:py-5 md:mt-5 md:w-full xl:text-base;
+  }
 }

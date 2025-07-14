@@ -9,7 +9,7 @@ interface Props {
   mode: "register" | "log in";
 }
 
-const Form = ({ mode }: Props) => {
+const UserForm = ({ mode }: Props) => {
   const {
     register,
     handleSubmit,
@@ -19,10 +19,7 @@ const Form = ({ mode }: Props) => {
   const onSubmit: SubmitHandler<Inputs> = (data) => {};
 
   return (
-    <form
-      className="w-full flex flex-col gap-5 md:gap-10"
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <form className="w-full form" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-input">
         <label htmlFor="username">Username:</label>
         <input
@@ -53,10 +50,10 @@ const Form = ({ mode }: Props) => {
           .split(" ")
           .map((word) => word[0].toUpperCase() + word.slice(1))
           .join(" ")}
-        className="black-btn btn-hover transition-animation rounded-xl py-2 mt-3 font- md:py-5 md:mt-5 md:w-full xl:text-base"
+        className="black-btn btn-hover transition-animation form-submit-btn"
       />
     </form>
   );
 };
 
-export default Form;
+export default UserForm;
