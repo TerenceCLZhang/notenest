@@ -1,4 +1,6 @@
+import axios from "axios";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 type Inputs = {
   username: string;
@@ -16,7 +18,26 @@ const UserForm = ({ mode }: Props) => {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {};
+  const navigate = useNavigate();
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    try {
+      const response = await axios.post("http://localhost:8080/auth/login", {
+        username: data.username,
+        password: data.password,
+      });
+
+      navigate("/notes");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorMsg = error.response?.data?.error || "Login failed.";
+        alert(errorMsg);
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+      console.error(error);
+    }
+  };
 
   return (
     <form className="w-full form" onSubmit={handleSubmit(onSubmit)}>
