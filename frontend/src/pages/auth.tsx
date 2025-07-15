@@ -7,17 +7,17 @@ const useQuery = () => new URLSearchParams(useLocation().search);
 const Auth = () => {
   const query = useQuery();
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"register" | "log in">("register");
+  const [mode, setMode] = useState<"register" | "login">("login");
 
   // Set initial mode from URL on mount
   useEffect(() => {
     const urlMode = query.get("mode");
-    if (urlMode === "log in") setMode("log in");
-    else setMode("register");
+    if (urlMode === "register") setMode("register");
+    else setMode("login");
   }, [query]);
 
   const handleChangeMode = () => {
-    const newMode = mode === "register" ? "log in" : "register";
+    const newMode = mode === "register" ? "login" : "register";
     setMode(newMode);
     navigate(`/auth?mode=${encodeURIComponent(newMode)}`);
   };

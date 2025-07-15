@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { clearAccessToken, setAccessToken } from "../../state/accessTokenSlice";
 
 type Inputs = {
   username: string;
@@ -8,7 +10,7 @@ type Inputs = {
 };
 
 interface Props {
-  mode: "register" | "log in";
+  mode: "register" | "login";
 }
 
 const UserForm = ({ mode }: Props) => {
@@ -18,14 +20,18 @@ const UserForm = ({ mode }: Props) => {
     formState: { errors },
   } = useForm<Inputs>();
 
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      const response = await axios.post("http://localhost:8080/auth/login", {
+      const response = await axios.post(`http://localhost:8080/auth/${mode}`, {
         username: data.username,
         password: data.password,
       });
+
+      dispatch(setAccessToken(response.data.accessToken));
 
       navigate("/notes");
     } catch (error) {
@@ -36,6 +42,7 @@ const UserForm = ({ mode }: Props) => {
         alert("Something went wrong. Please try again.");
       }
       console.error(error);
+      dispatch(clearAccessToken());
     }
   };
 
