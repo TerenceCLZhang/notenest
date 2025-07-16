@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const RefreshToken = require("../models/RefreshToken");
 
+const COOKIE_MAX_AGE = 60 * 60 * 1000;
+
 // Helper functions for JWT tokens
 const generateAccessToken = (user) => {
   return jwt.sign({ username: user.username }, process.env.JWT_ACCESS_SECRET, {
@@ -53,11 +55,18 @@ const register = async (req, res) => {
     const accessToken = generateAccessToken(newUser);
     const refreshToken = await generateRefreshToken(newUser);
 
-    return res.json({
-      message: "User created and logged in",
-      accessToken,
-      refreshToken,
-    });
+    return res
+      .cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        // secure: process.env.NODE_ENV === "production",
+        // sameSite: "Strict",
+        // path: "/auth/token",
+        maxAge: COOKIE_MAX_AGE,
+      })
+      .json({
+        message: "User created and logged in",
+        accessToken,
+      });
   } catch (error) {
     return res.status(500).json({ error: "Internal server error." });
   }
@@ -94,11 +103,19 @@ const login = async (req, res) => {
   const accessToken = generateAccessToken(user);
   const refreshToken = await generateRefreshToken(user);
 
-  res.json({ accessToken, refreshToken });
+  res
+    .cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      // secure: process.env.NODE_ENV === "production",
+      // sameSite: "Strict",
+      // path: "/auth/token",
+      maxAge: COOKIE_MAX_AGE,
+    })
+    .json({ message: "Successfully logged in", accessToken });
 };
 
 const token = async (req, res) => {
-  const refreshToken = req.body.token;
+  const refreshToken = req.cookies.refreshToken;
 
   // Check if valid refresh token
   if (!refreshToken) {
@@ -123,10 +140,18 @@ const token = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-  const refreshToken = req.body.token;
+  const refreshToken = req.cookies.refreshToken;
 
   try {
     await RefreshToken.deleteOne({ token: refreshToken });
+
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      // secure: process.env.NODE_ENV === "production",
+      // sameSite: "Strict",
+      // path: "/auth/token",
+    });
+
     res.sendStatus(204);
   } catch (error) {
     res.status(500).json({ error: "Internal server error." });

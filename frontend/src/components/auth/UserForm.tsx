@@ -27,10 +27,14 @@ const UserForm = ({ mode }: Props) => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      const response = await axios.post(`http://localhost:8080/auth/${mode}`, {
-        username: data.username,
-        password: data.password,
-      });
+      const response = await axios.post(
+        `http://localhost:8080/auth/${mode}`,
+        {
+          username: data.username,
+          password: data.password,
+        },
+        { withCredentials: true }
+      );
 
       dispatch(setUsername(data.username));
       dispatch(setAccessToken(response.data.accessToken));
