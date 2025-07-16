@@ -2,6 +2,7 @@ import main from "../../images/landing/main.jpg";
 import fastCapture from "../../images/landing/fast_capture.jpg";
 import smartOrganization from "../../images/landing/smart_organization.jpg";
 import accessAnywhere from "../../images/landing/access_anywhere.jpg";
+import { Link } from "react-router-dom";
 
 const Main = () => {
   return (
@@ -9,12 +10,12 @@ const Main = () => {
       <div className="text-center font-bold">
         <h2 className="heading-main">Capture. Organize.</h2>
         <span className="subheading-main">Your ideas in one place.</span>
-        <a
-          href="/auth?mode=register"
+        <Link
+          to="/auth?mode=register"
           className="block m-auto mt-5 black-btn btn-hover transition-animation"
         >
           Start
-        </a>
+        </Link>
       </div>
 
       <div className="h-50 w-full rounded-2xl mb-5 overflow-hidden relative md:h-100">
@@ -58,12 +59,12 @@ const Main = () => {
             Register for free to start organizing your ideas today.
           </span>
         </div>
-        <a
-          href="/auth?mode=register"
+        <Link
+          to="/auth?mode=register"
           className="black-btn btn-hover transition-animation"
         >
           Register an Account
-        </a>
+        </Link>
       </div>
     </main>
   );

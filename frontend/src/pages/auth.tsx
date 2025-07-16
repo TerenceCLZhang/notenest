@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import UserForm from "../components/auth/UserForm";
 
 const useQuery = () => new URLSearchParams(useLocation().search);
@@ -29,7 +29,7 @@ const Auth = () => {
       <div className="py-10 p-5 lg:flex lg:flex-col lg:justify-center lg:items-center lg:w-[60%]">
         <header className="flex flex-col gap-4">
           <h1 className="m-auto text-4xl lg:text-6xl">
-            <a href="/">NoteNest</a>
+            <Link to="/">NoteNest</Link>
           </h1>
           <span className="text-2xl font-semibold">
             {mode

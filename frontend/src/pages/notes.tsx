@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Header from "../components/notes/Header";
+import { Link } from "react-router-dom";
 
 const Notes = () => {
   return (
@@ -20,14 +21,14 @@ const Notes = () => {
           </p>
         </section>
 
-        <a
-          href="/notes/create"
+        <Link
+          to="/notes/create"
           className="flex items-center justify-center border border-gray-500 min-h-75 h-full w-full border-dotted rounded-2xl hover:border-black hover:border-2 hover:font-bold transition-animation"
         >
           <span className="">
             Create New Note <FontAwesomeIcon icon={faPlus} />
           </span>
-        </a>
+        </Link>
       </main>
     </div>
   );

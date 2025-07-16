@@ -1,22 +1,24 @@
+import { Link } from "react-router-dom";
+
 const Header = () => {
   return (
     <header>
-      <a href="/">
+      <Link to="/">
         <h1>NoteNest</h1>
-      </a>
+      </Link>
       <nav className="flex gap-2 lg:gap-3">
-        <a
+        <Link
           className="header-btn bg-black text-white btn-hover transition-animation"
-          href="/auth?mode=register"
+          to="/auth?mode=register"
         >
           Register
-        </a>
-        <a
+        </Link>
+        <Link
           className="header-btn bg-gray-300 btn-hover transition-animation"
-          href="/auth?mode=log in"
+          to="/auth?mode=log in"
         >
           Login In
-        </a>
+        </Link>
       </nav>
     </header>
   );

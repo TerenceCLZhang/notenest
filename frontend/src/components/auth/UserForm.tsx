@@ -3,6 +3,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { clearAccessToken, setAccessToken } from "../../state/accessTokenSlice";
+import { clearUsername, setUsername } from "../../state/userSlice";
 
 type Inputs = {
   username: string;
@@ -31,6 +32,7 @@ const UserForm = ({ mode }: Props) => {
         password: data.password,
       });
 
+      dispatch(setUsername(data.username));
       dispatch(setAccessToken(response.data.accessToken));
 
       navigate("/notes");
@@ -42,6 +44,8 @@ const UserForm = ({ mode }: Props) => {
         alert("Something went wrong. Please try again.");
       }
       console.error(error);
+
+      dispatch(clearUsername());
       dispatch(clearAccessToken());
     }
   };
