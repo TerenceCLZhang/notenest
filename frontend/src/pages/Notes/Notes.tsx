@@ -4,10 +4,10 @@ import {
   faPlus,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import Header from "../components/notes/Header";
+import Header from "../../components/notes/Header";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import api from "../utils/AxiosInstance";
+import api from "../../utils/AxiosInstance";
 
 type Note = {
   _id: string;

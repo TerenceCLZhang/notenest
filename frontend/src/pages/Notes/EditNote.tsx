@@ -1,17 +1,21 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
-import Header from "../components/notes/Header";
+import Header from "../../components/notes/Header";
+import { useLocation } from "react-router-dom";
 
 type Inputs = {
   title: string;
   content: string;
 };
 
-const CreateNote = () => {
+const EditNote = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
+
+  const location = useLocation();
+  const { note } = location.state;
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {};
 
@@ -19,7 +23,7 @@ const CreateNote = () => {
     <div className="reg-page-layout">
       <Header />
       <main>
-        <h2 className="font-bold text-3xl xl:text-5xl">Create New Note</h2>
+        <h2 className="font-bold text-3xl xl:text-5xl">Edit Note</h2>
         <form
           className="form w-full lg:w-[75%]"
           onSubmit={handleSubmit(onSubmit)}
@@ -29,6 +33,7 @@ const CreateNote = () => {
             <input
               type="text"
               id="title"
+              value={note.title}
               {...register("title", { required: "Title is required" })}
             />
             {errors.title && <p className="error">{errors.title.message}</p>}
@@ -38,6 +43,7 @@ const CreateNote = () => {
             <textarea
               id="content"
               rows={5}
+              value={note.content}
               {...register("content", { required: "Content is required" })}
             ></textarea>
             {errors.content && (
@@ -46,7 +52,7 @@ const CreateNote = () => {
           </div>
           <input
             type="submit"
-            value="Create"
+            value="Save"
             className="black-btn btn-hover transition-animation form-submit-btn"
           />
         </form>
@@ -55,4 +61,4 @@ const CreateNote = () => {
   );
 };
 
-export default CreateNote;
+export default EditNote;
