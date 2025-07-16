@@ -16,7 +16,7 @@ const CreateNote = () => {
   const onSubmit: SubmitHandler<Inputs> = (data) => {};
 
   return (
-    <div className="px-5 pt-8 md:px-13 md:py-15 lg:w-[90vw] 2xl:w-[75vw] m-auto">
+    <div className="reg-page-layout">
       <Header />
       <main>
         <h2 className="font-bold text-3xl xl:text-5xl">Create New Note</h2>

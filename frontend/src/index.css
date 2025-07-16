@@ -29,6 +29,10 @@
 }
 
 @layer components {
+  .reg-page-layout {
+    @apply px-5 pt-8 md:px-13 md:py-15 lg:w-[90vw] 2xl:w-[75vw] m-auto;
+  }
+
   .header-btn {
     @apply p-2 rounded-full font-medium text-sm md:text-base xl:text-lg xl:px-3;
   }

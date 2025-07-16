@@ -5,7 +5,7 @@ import "../styles/landing.css";
 
 const Landing = () => {
   return (
-    <div className="px-5 pt-8 md:px-13 md:py-15 lg:w-[90vw] 2xl:w-[75vw] m-auto">
+    <div className="reg-page-layout">
       <Header />
       <Main />
       <Footer />

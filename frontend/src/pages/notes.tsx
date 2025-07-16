@@ -32,7 +32,7 @@ const Notes = () => {
   }, []);
 
   return (
-    <div className="px-5 pt-8 md:px-13 md:py-15 lg:w-[90vw] 2xl:w-[75vw] m-auto">
+    <div className="reg-page-layout">
       <Header />
 
       <main className="lg:grid lg:grid-cols-3">
@@ -49,7 +49,7 @@ const Notes = () => {
             </div>
 
             <div className="self-end space-x-4">
-              <Link to="">
+              <Link to={`/notes/edit/${item._id}`} state={{ note: item }}>
                 <FontAwesomeIcon icon={faPencil} /> Edit
               </Link>
               <button>
