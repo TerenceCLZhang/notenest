@@ -3,7 +3,7 @@ import type { RootState } from "../../state/store";
 import { Link } from "react-router-dom";
 import { clearAccessToken } from "../../state/accessTokenSlice";
 import { clearUsername } from "../../state/userSlice";
-import api from "../../utils/axiosInstance";
+import api from "../../utils/AxiosInstance";
 
 const Header = () => {
   const username = useSelector((state: RootState) => state.user.username);

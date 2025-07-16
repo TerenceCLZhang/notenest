@@ -30,7 +30,7 @@
 
 @layer components {
   .reg-page-layout {
-    @apply px-5 pt-8 md:px-13 md:py-15 lg:w-[90vw] 2xl:w-[75vw] m-auto;
+    @apply px-5 py-8 md:px-13 md:py-15 lg:w-[90vw] 2xl:w-[75vw] m-auto;
   }
 
   .header-btn {

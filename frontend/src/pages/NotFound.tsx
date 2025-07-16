@@ -1,24 +1,28 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import type { RootState } from "../state/store";
 
 const NotFound = () => {
-  const navigate = useNavigate();
+  const accessToken = useSelector(
+    (state: RootState) => state.accessToken.token
+  );
 
   return (
     <div className="reg-page-layout">
       <header>
-        <Link to="/">
+        <Link to={accessToken ? "/notes" : "/"}>
           <h1>NoteNest</h1>
         </Link>
       </header>
       <main>
         <h2 className="text-4xl">404 - Page Not Found</h2>
         <p>Sorry, the page you’re looking for doesn’t exist.</p>
-        <button
-          onClick={() => navigate(-1)}
+        <Link
+          to={accessToken ? "/notes" : "/"}
           className="black-btn btn-hover transition-animation"
         >
-          Go Back
-        </button>
+          Back to {accessToken ? "Notes" : "Home"}
+        </Link>
       </main>
     </div>
   );

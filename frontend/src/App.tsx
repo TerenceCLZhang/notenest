@@ -1,19 +1,24 @@
 import { Route, Routes } from "react-router-dom";
-import Landing from "./pages/landing";
-import Auth from "./pages/auth";
-import Notes from "./pages/notes";
-import CreateNote from "./pages/create_note";
-import EditNote from "./pages/edit_note";
+import Landing from "./pages/Landing";
+import Auth from "./pages/Auth";
+import Notes from "./pages/Notes";
+import CreateNote from "./pages/CreateNote";
+import EditNote from "./pages/EditNote";
 import NotFound from "./pages/NotFound";
+import ProtectedRoutes from "./utils/protectedRoutes";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/auth" element={<Auth />} />
-      <Route path="/notes" element={<Notes />} />
-      <Route path="/notes/create" element={<CreateNote />} />
-      <Route path="/notes/edit/:id" element={<EditNote />} />
+
+      <Route element={<ProtectedRoutes />}>
+        <Route path="/notes" element={<Notes />} />
+        <Route path="/notes/create" element={<CreateNote />} />
+        <Route path="/notes/edit/:id" element={<EditNote />} />
+      </Route>
+
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

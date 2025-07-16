@@ -1,9 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPenToSquare,
+  faPlus,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import Header from "../components/notes/Header";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import api from "../utils/axiosInstance";
+import api from "../utils/AxiosInstance";
 
 type Note = {
   _id: string;
@@ -49,10 +53,14 @@ const Notes = () => {
             </div>
 
             <div className="self-end space-x-4">
-              <Link to={`/notes/edit/${item._id}`} state={{ note: item }}>
-                <FontAwesomeIcon icon={faPencil} /> Edit
+              <Link
+                to={`/notes/edit/${item._id}`}
+                state={{ note: item }}
+                className="btn-hover transition-animation"
+              >
+                <FontAwesomeIcon icon={faPenToSquare} /> Edit
               </Link>
-              <button>
+              <button className="hover:text-red-500 hover:opacity-95 transition-animation">
                 <FontAwesomeIcon icon={faTrash} /> Delete
               </button>
             </div>
