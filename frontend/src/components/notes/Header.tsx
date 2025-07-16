@@ -3,7 +3,7 @@ import type { RootState } from "../../state/store";
 import { Link } from "react-router-dom";
 import { clearAccessToken } from "../../state/accessTokenSlice";
 import { clearUsername } from "../../state/userSlice";
-import axios from "axios";
+import api from "../../utils/axiosInstance";
 
 const Header = () => {
   const username = useSelector((state: RootState) => state.user.username);
@@ -11,9 +11,7 @@ const Header = () => {
 
   const handleLogOut = async () => {
     try {
-      await axios.delete("http://localhost:8080/auth/logout", {
-        withCredentials: true,
-      });
+      await api.delete("/auth/logout");
 
       dispatch(clearAccessToken());
       dispatch(clearUsername());

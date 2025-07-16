@@ -2,14 +2,13 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
-const RefreshToken = require("../models/RefreshToken");
 
-const COOKIE_MAX_AGE = 60 * 60 * 1000;
+const COOKIE_MAX_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 // Helper functions for JWT tokens
 const generateAccessToken = (user) => {
   return jwt.sign({ username: user.username }, process.env.JWT_ACCESS_SECRET, {
-    expiresIn: "15s",
+    expiresIn: "15m",
   });
 };
 
@@ -18,7 +17,6 @@ const generateRefreshToken = async (user) => {
     { username: user.username },
     process.env.JWT_REFRESH_SECRET
   );
-  await RefreshToken.create({ username: user.username, token });
   return token;
 };
 
@@ -122,12 +120,6 @@ const token = async (req, res) => {
     return res.status(401).json({ error: "Refresh token not found." });
   }
 
-  // Check if refresh token is valid
-  const storedToken = await RefreshToken.findOne({ token: refreshToken });
-  if (!storedToken) {
-    return res.status(403).json({ error: "Forbidden." });
-  }
-
   jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, user) => {
     if (err) {
       return res.status(403).json({ error: "Forbidden." });
@@ -143,8 +135,6 @@ const logout = async (req, res) => {
   const refreshToken = req.cookies.refreshToken;
 
   try {
-    await RefreshToken.deleteOne({ token: refreshToken });
-
     res.clearCookie("refreshToken", {
       httpOnly: true,
       // secure: process.env.NODE_ENV === "production",
