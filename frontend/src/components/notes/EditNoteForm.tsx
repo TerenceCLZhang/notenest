@@ -35,7 +35,10 @@ const EditNoteForm = ({ note }: Props) => {
   return (
     <form className="form w-full lg:w-[75%]" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-input">
-        <label htmlFor="title">Title:</label>
+        <label htmlFor="title">
+          <span>Title:</span>{" "}
+          <span className="text-sm text-gray-500">(Max: 100 characters)</span>
+        </label>
         <input
           type="text"
           id="title"

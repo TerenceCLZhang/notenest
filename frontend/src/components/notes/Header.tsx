@@ -31,6 +31,7 @@ const Header = () => {
         </span>
         <nav className="space-x-2 lg:space-x-4">
           <button
+            type="button"
             onClick={handleLogOut}
             className="header-btn bg-black text-white btn-hover transition-animation"
           >

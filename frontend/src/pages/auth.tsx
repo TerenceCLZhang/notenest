@@ -52,6 +52,7 @@ const Auth = () => {
 
         <footer className="mt-7">
           <button
+            type="button"
             className="text-gray-800 hover:text-gray-500 transition-animation"
             onClick={handleChangeMode}
           >

@@ -6,7 +6,11 @@ import { clearAccessToken, setAccessToken } from "../../state/accessTokenSlice";
 import { clearUsername, setUsername } from "../../state/userSlice";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleExclamation,
+  faEye,
+  faEyeSlash,
+} from "@fortawesome/free-solid-svg-icons";
 
 type Inputs = {
   username: string;
@@ -26,6 +30,7 @@ const UserForm = ({ mode }: Props) => {
   } = useForm<Inputs>();
 
   const [formError, setFormError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -84,6 +89,7 @@ const UserForm = ({ mode }: Props) => {
         />
         {errors.username && <p className="error">{errors.username.message}</p>}
       </div>
+
       {mode === "register" && (
         <div className="form-input">
           <label htmlFor="email">Email:</label>
@@ -102,13 +108,30 @@ const UserForm = ({ mode }: Props) => {
           {errors.email && <p className="error">{errors.email.message}</p>}
         </div>
       )}
+
       <div className="form-input">
         <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          {...register("password", { required: "Password is required." })}
-        />
+        <div className="w-full relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            id="password"
+            className="pr-15"
+            {...register("password", { required: "Password is required." })}
+          />
+          <button
+            type="button"
+            className="absolute right-5 top-1/2 -translate-y-1/2 hover:text-gray-600 transition-animation"
+            onClick={() => setShowPassword(!showPassword)}
+            aria-label={showPassword ? "Hide password" : "Show password"}
+            title={showPassword ? "Hide password" : "Show password"}
+          >
+            {showPassword ? (
+              <FontAwesomeIcon icon={faEyeSlash} />
+            ) : (
+              <FontAwesomeIcon icon={faEye} />
+            )}
+          </button>
+        </div>
         {errors.password && <p className="error">{errors.password.message}</p>}
       </div>
 

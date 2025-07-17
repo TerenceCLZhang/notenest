@@ -46,6 +46,7 @@ const NoteComponent = ({ item }: Props) => {
           <FontAwesomeIcon icon={faPenToSquare} /> Edit
         </Link>
         <button
+          type="button"
           onClick={handleDelete}
           className="hover:text-red-500 hover:opacity-95 transition-animation"
         >
