@@ -27,6 +27,7 @@ const EditNoteForm = ({ note }: Props) => {
       await api.put(`/notes/${note._id}`, data);
       navigate("/notes");
     } catch (error) {
+      alert("An unexpected error occured. Please try again.");
       console.log(error);
     }
   };
@@ -38,7 +39,13 @@ const EditNoteForm = ({ note }: Props) => {
         <input
           type="text"
           id="title"
-          {...register("title", { required: "Title is required" })}
+          {...register("title", {
+            required: "Title is required",
+            maxLength: {
+              value: 100,
+              message: "Title must be 100 characters or less.",
+            },
+          })}
         />
         {errors.title && <p className="error">{errors.title.message}</p>}
       </div>

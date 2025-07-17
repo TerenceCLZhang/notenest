@@ -21,6 +21,10 @@ const createNote = async (req, res) => {
       .json({ error: "Request must contain a title and content." });
   }
 
+  if (title.length > 100) {
+    return res.status(400).json({ error: "Title must be 100 words or less" });
+  }
+
   try {
     // Create and save new post
     const newPost = new Note({ username: req.user.username, title, content });

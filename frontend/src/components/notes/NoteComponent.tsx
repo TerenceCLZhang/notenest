@@ -27,12 +27,12 @@ const NoteComponent = ({ item }: Props) => {
   };
 
   return (
-    <section className="flex flex-col justify-between shadow-md rounded-2xl p-6 md:p-8 lg:p-10 border border-gray-300 h-full w-full min-h-50 lg:min-h-75">
+    <section className="flex flex-col gap-5 justify-between shadow-md rounded-2xl p-6 md:p-8 lg:p-10 border border-gray-300 h-full w-full min-h-50 lg:min-h-75">
       <div className="space-y-4">
-        <h2 className="text-xl md:text-2xl font-semibold text-gray-800">
+        <h2 className="text-xl md:text-2xl font-semibold text-gray-800 break-words whitespace-pre-wrap">
           {item.title}
         </h2>
-        <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+        <p className="text-gray-700 leading-relaxed break-words whitespace-pre-wrap">
           {item.content}
         </p>
       </div>

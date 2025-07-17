@@ -15,6 +15,7 @@ const Header = () => {
       dispatch(clearAccessToken());
       dispatch(clearUsername());
     } catch (error) {
+      alert("An unexpected error occured. Please try again.");
       console.log(error);
     }
   };
