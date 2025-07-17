@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import UserForm from "../components/auth/UserForm";
+import { useSelector } from "react-redux";
+import type { RootState } from "../state/store";
 
 const useQuery = () => new URLSearchParams(useLocation().search);
 
 const Auth = () => {
   const query = useQuery();
   const navigate = useNavigate();
+  const token = useSelector((state: RootState) => state.accessToken.token);
+
   const [mode, setMode] = useState<"register" | "login">("login");
 
   // Set initial mode from URL on mount
@@ -16,11 +20,15 @@ const Auth = () => {
     else setMode("login");
   }, [query]);
 
+  // Change mode and refresh page
   const handleChangeMode = () => {
     const newMode = mode === "register" ? "login" : "register";
     setMode(newMode);
     navigate(`/auth?mode=${encodeURIComponent(newMode)}`);
   };
+
+  // If the user is logged in redirect to /notes
+  if (token) return <Navigate to={"/notes"} />;
 
   return (
     <div className="lg:flex">

@@ -67,6 +67,8 @@ const UserForm = ({ mode }: Props) => {
               value: 3,
               message: "Username must be at least 3 characters long.",
             },
+            validate: (value) =>
+              !/\s/.test(value) || "Username must not contain spaces.",
           })}
         />
         {errors.username && <p className="error">{errors.username.message}</p>}
@@ -76,7 +78,7 @@ const UserForm = ({ mode }: Props) => {
         <input
           type="password"
           id="password"
-          {...register("password", { required: "Password is required" })}
+          {...register("password", { required: "Password is required." })}
         />
         {errors.password && <p className="error">{errors.password.message}</p>}
       </div>

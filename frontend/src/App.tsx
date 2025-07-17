@@ -34,18 +34,16 @@ function App() {
         );
         dispatch(setAccessToken(res.data.accessToken));
         dispatch(setUsername(res.data.user.username));
-        console.log("REFRESH SUCCESS", res.data);
       } catch (error) {
         dispatch(clearAccessToken());
         dispatch(clearUsername());
-        console.log("Session expired.");
       } finally {
         setLoading(false); // Always end loading
       }
     };
 
     refresh();
-  }, [dispatch, token]);
+  }, []);
 
   if (loading) return <div>Loading...</div>; // prevent premature render
 

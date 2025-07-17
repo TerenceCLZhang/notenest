@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../state/store";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { clearAccessToken } from "../../state/accessTokenSlice";
 import { clearUsername } from "../../state/userSlice";
 import api from "../../utils/AxiosInstance";
@@ -12,10 +12,8 @@ const Header = () => {
   const handleLogOut = async () => {
     try {
       await api.delete("/auth/logout");
-
       dispatch(clearAccessToken());
       dispatch(clearUsername());
-      <Navigate to={"/"} />;
     } catch (error) {
       console.log(error);
     }
@@ -26,18 +24,17 @@ const Header = () => {
       <Link to="/notes">
         <h1>NoteNest</h1>
       </Link>
-      <div className="flex gap-3 lg:gap-7">
+      <div className="flex gap-3 lg:gap-7 items-center">
         <span className="truncate max-w-25 md:max-w-100 block">
           Hi <b>{username}</b>
         </span>
         <nav className="space-x-2 lg:space-x-4">
-          <Link
-            to="/"
+          <button
             onClick={handleLogOut}
             className="header-btn bg-black text-white btn-hover transition-animation"
           >
             Log Out
-          </Link>
+          </button>
         </nav>
       </div>
     </header>

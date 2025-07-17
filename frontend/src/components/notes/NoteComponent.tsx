@@ -1,13 +1,31 @@
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import type { Note } from "../../pages/Notes/Notes";
+import api from "../../utils/AxiosInstance";
 
 interface Props {
   item: Note;
 }
 
 const NoteComponent = ({ item }: Props) => {
+  const navigate = useNavigate();
+
+  const handleDelete = async () => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this note?"
+    );
+
+    if (!confirmed) return;
+
+    try {
+      await api.delete(`/notes/${item._id}`);
+      navigate(0);
+    } catch (error) {
+      console.error("Failed to delete note:", error);
+    }
+  };
+
   return (
     <section className="flex flex-col justify-between shadow-md rounded-2xl p-6 md:p-8 lg:p-10 border border-gray-300 h-full w-full min-h-50 lg:min-h-75">
       <div className="space-y-4">
@@ -25,7 +43,10 @@ const NoteComponent = ({ item }: Props) => {
         >
           <FontAwesomeIcon icon={faPenToSquare} /> Edit
         </Link>
-        <button className="hover:text-red-500 hover:opacity-95 transition-animation">
+        <button
+          onClick={handleDelete}
+          className="hover:text-red-500 hover:opacity-95 transition-animation"
+        >
           <FontAwesomeIcon icon={faTrash} /> Delete
         </button>
       </div>
