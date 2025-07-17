@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
 
+const isProduction = process.env.NODE_ENV === "production";
 const COOKIE_MAX_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 // Helper functions for JWT tokens
@@ -56,9 +57,8 @@ const register = async (req, res) => {
     return res
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        // secure: process.env.NODE_ENV === "production",
-        // sameSite: "Strict",
-        // path: "/auth/token",
+        secure: isProduction,
+        sameSite: isProduction ? "Strict" : "Lax",
         maxAge: COOKIE_MAX_AGE,
       })
       .json({
@@ -104,9 +104,8 @@ const login = async (req, res) => {
   res
     .cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      // secure: process.env.NODE_ENV === "production",
-      // sameSite: "Strict",
-      // path: "/auth/token",
+      secure: isProduction,
+      sameSite: isProduction ? "Strict" : "Lax",
       maxAge: COOKIE_MAX_AGE,
     })
     .json({ message: "Successfully logged in", accessToken });
@@ -127,19 +126,20 @@ const token = async (req, res) => {
 
     // Create new access token
     const accessToken = generateAccessToken(user);
-    res.json({ accessToken });
+    res.json({
+      message: "Successfully generated new access token",
+      user,
+      accessToken,
+    });
   });
 };
 
 const logout = async (req, res) => {
-  const refreshToken = req.cookies.refreshToken;
-
   try {
     res.clearCookie("refreshToken", {
       httpOnly: true,
-      // secure: process.env.NODE_ENV === "production",
-      // sameSite: "Strict",
-      // path: "/auth/token",
+      secure: isProduction,
+      sameSite: isProduction ? "Strict" : "Lax",
     });
 
     res.sendStatus(204);

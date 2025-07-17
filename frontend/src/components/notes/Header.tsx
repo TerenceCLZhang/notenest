@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../state/store";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { clearAccessToken } from "../../state/accessTokenSlice";
 import { clearUsername } from "../../state/userSlice";
 import api from "../../utils/AxiosInstance";
@@ -15,6 +15,7 @@ const Header = () => {
 
       dispatch(clearAccessToken());
       dispatch(clearUsername());
+      <Navigate to={"/"} />;
     } catch (error) {
       console.log(error);
     }

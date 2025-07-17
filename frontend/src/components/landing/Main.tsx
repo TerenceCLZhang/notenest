@@ -14,7 +14,7 @@ const Main = () => {
           to="/auth?mode=register"
           className="block m-auto mt-5 black-btn btn-hover transition-animation"
         >
-          Start
+          Get Started Today
         </Link>
       </div>
 
