@@ -22,13 +22,13 @@ const generateRefreshToken = async (user) => {
 };
 
 const register = async (req, res) => {
-  const { username, password } = req.body;
+  const { username, email, password } = req.body;
 
   // Check if username and password in body
-  if (!(username && password)) {
+  if (!(username && email && password)) {
     return res
       .status(400)
-      .json({ error: "Request must contain a username and password." });
+      .json({ error: "Request must contain a username, email, and password." });
   }
 
   // Check if username has a length of at least 3
@@ -37,17 +37,23 @@ const register = async (req, res) => {
   }
 
   try {
-    // Check if user already exists
-    const existingUser = await User.findOne({ username });
-    if (existingUser) {
+    // Check if username is taken
+    const usernameTaken = await User.findOne({ username });
+    if (usernameTaken) {
       return res.status(400).json({ error: "Username already taken." });
+    }
+
+    // Check if email is taken
+    const emailTaken = await User.findOne({ email });
+    if (emailTaken) {
+      return res.status(400).json({ error: "Email already registered." });
     }
 
     // Hash password + salt
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create and save user
-    const newUser = new User({ username, password: hashedPassword });
+    const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
 
     // Create JWT after user is created

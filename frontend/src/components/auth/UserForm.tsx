@@ -4,10 +4,14 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { clearAccessToken, setAccessToken } from "../../state/accessTokenSlice";
 import { clearUsername, setUsername } from "../../state/userSlice";
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 type Inputs = {
   username: string;
   password: string;
+  email?: string;
 };
 
 interface Props {
@@ -21,18 +25,22 @@ const UserForm = ({ mode }: Props) => {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const dispatch = useDispatch();
+  const [formError, setFormError] = useState("");
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
+      const payload = {
+        username: data.username,
+        password: data.password,
+        ...(mode === "register" && { email: data.email }),
+      };
+
       const response = await axios.post(
         `http://localhost:8080/auth/${mode}`,
-        {
-          username: data.username,
-          password: data.password,
-        },
+        payload,
         { withCredentials: true }
       );
 
@@ -41,12 +49,15 @@ const UserForm = ({ mode }: Props) => {
 
       navigate("/notes");
     } catch (error) {
+      let errorMsg;
+
       if (axios.isAxiosError(error)) {
-        const errorMsg = error.response?.data?.error || "Login failed.";
-        alert(errorMsg);
+        errorMsg = error.response?.data?.error || "Login failed.";
       } else {
-        alert("Something went wrong. Please try again.");
+        errorMsg = "Something went wrong. Please try again.";
       }
+
+      setFormError(errorMsg);
       console.error(error);
 
       dispatch(clearUsername());
@@ -73,6 +84,24 @@ const UserForm = ({ mode }: Props) => {
         />
         {errors.username && <p className="error">{errors.username.message}</p>}
       </div>
+      {mode === "register" && (
+        <div className="form-input">
+          <label htmlFor="email">Email:</label>
+          <input
+            type="text"
+            inputMode="email"
+            id="email"
+            {...register("email", {
+              required: "Email is required.",
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "Please enter a valid email address.",
+              },
+            })}
+          />
+          {errors.email && <p className="error">{errors.email.message}</p>}
+        </div>
+      )}
       <div className="form-input">
         <label htmlFor="password">Password:</label>
         <input
@@ -82,14 +111,22 @@ const UserForm = ({ mode }: Props) => {
         />
         {errors.password && <p className="error">{errors.password.message}</p>}
       </div>
-      <input
-        type="submit"
-        value={mode
-          .split(" ")
-          .map((word) => word[0].toUpperCase() + word.slice(1))
-          .join(" ")}
-        className="black-btn btn-hover transition-animation form-submit-btn"
-      />
+
+      <div>
+        {formError && (
+          <p className="text-red-700 text-center">
+            <FontAwesomeIcon icon={faCircleExclamation} /> {formError}
+          </p>
+        )}
+        <input
+          type="submit"
+          value={mode
+            .split(" ")
+            .map((word) => word[0].toUpperCase() + word.slice(1))
+            .join(" ")}
+          className="black-btn btn-hover transition-animation form-submit-btn"
+        />
+      </div>
     </form>
   );
 };

@@ -32,7 +32,9 @@ const NoteComponent = ({ item }: Props) => {
         <h2 className="text-xl md:text-2xl font-semibold text-gray-800">
           {item.title}
         </h2>
-        <p className="text-gray-700 leading-relaxed">{item.content}</p>
+        <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+          {item.content}
+        </p>
       </div>
 
       <div className="self-end space-x-4">
