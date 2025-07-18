@@ -32,15 +32,18 @@ const Main = () => {
             <img src={fastCapture} alt="" />
           </div>
           <h3>Fast capture.</h3>
-          <p>Quickly jot down ideas and never lose a thought.</p>
+          <p>
+            {" "}
+            Jot down thoughts in an instant so nothing important ever gets lost.
+          </p>
         </div>
 
         <div className="landing-card">
           <div className="card-img">
             <img src={smartOrganization} alt="" />
           </div>
-          <h3>Smart organization.</h3>
-          <p>Structure and sort notes visually for easy searching later.</p>
+          <h3>Private by design.</h3>
+          <p>Your notes stay yours — secure, personal, and never shared.</p>
         </div>
 
         <div className="landing-card">
