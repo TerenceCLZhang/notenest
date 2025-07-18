@@ -26,6 +26,12 @@
   input[type="submit"] {
     @apply cursor-pointer;
   }
+
+  button,
+  input,
+  a {
+    @apply focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-700 focus-visible:ring-offset-2;
+  }
 }
 
 @layer components {

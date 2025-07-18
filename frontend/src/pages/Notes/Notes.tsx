@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../../utils/AxiosInstance";
 import NoteComponent from "../../components/notes/NoteComponent";
+import ErrorPopUp from "../../components/ErrorPopUp";
 
 export type Note = {
   _id: string;
@@ -24,19 +25,36 @@ const Notes = () => {
   const [notes, setNotes] = useState<Note[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [noteToDelete, setNoteToDelete] = useState<Note | null>(null);
+  const [errorPopUpText, setErrorPopUpText] = useState("");
 
   useEffect(() => {
     const fetchNotes = async () => {
       try {
         const response = await api.get("/notes");
         setNotes(response.data);
-      } catch (error) {
+      } catch (error: any) {
+        const errorMsg =
+          error?.response?.data?.message ||
+          error?.message ||
+          "An unexpected error occurred.";
+        setErrorPopUpText(errorMsg);
         console.error(error);
       }
     };
 
     fetchNotes();
   }, []);
+
+  // Automatically closes the error popup after 5 seconds
+  useEffect(() => {
+    if (errorPopUpText) {
+      const timer = setTimeout(() => {
+        setErrorPopUpText("");
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [errorPopUpText]);
 
   const filteredNotes = notes.filter((note) =>
     `${note.title} ${note.content}`
@@ -48,6 +66,13 @@ const Notes = () => {
     <>
       {noteToDelete && (
         <div className="fixed top-0 left-0 h-full w-full bg-black/50 z-10"></div>
+      )}
+
+      {errorPopUpText && (
+        <ErrorPopUp
+          text={errorPopUpText}
+          onClose={() => setErrorPopUpText("")}
+        />
       )}
 
       <div className="reg-page-layout">
