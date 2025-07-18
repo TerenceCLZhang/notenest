@@ -9,7 +9,9 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../../utils/AxiosInstance";
 import NoteComponent from "../../components/notes/NoteComponent";
-import ErrorPopUp from "../../components/ErrorPopUp";
+import ErrorPopup from "../../components/ErrorPopup";
+import useErrorPopup from "../../hooks/useErrorPopup";
+import type { AxiosError } from "axios";
 
 export type Note = {
   _id: string;
@@ -25,36 +27,32 @@ const Notes = () => {
   const [notes, setNotes] = useState<Note[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [noteToDelete, setNoteToDelete] = useState<Note | null>(null);
-  const [errorPopUpText, setErrorPopUpText] = useState("");
+
+  const {
+    errorText: errorPopUpText,
+    setErrorText: setErrorPopUpText,
+    clearError,
+  } = useErrorPopup();
 
   useEffect(() => {
     const fetchNotes = async () => {
       try {
         const response = await api.get("/notes");
         setNotes(response.data);
-      } catch (error: any) {
+      } catch (err) {
+        const error = err as AxiosError<{ error?: string }>;
         const errorMsg =
-          error?.response?.data?.message ||
-          error?.message ||
-          "An unexpected error occurred.";
+          error?.response?.data?.error ||
+          "Something went wrong. Please try again.";
+
         setErrorPopUpText(errorMsg);
+        console.error(error);
         console.error(error);
       }
     };
 
     fetchNotes();
   }, []);
-
-  // Automatically closes the error popup after 5 seconds
-  useEffect(() => {
-    if (errorPopUpText) {
-      const timer = setTimeout(() => {
-        setErrorPopUpText("");
-      }, 5000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [errorPopUpText]);
 
   const filteredNotes = notes.filter((note) =>
     `${note.title} ${note.content}`
@@ -69,10 +67,7 @@ const Notes = () => {
       )}
 
       {errorPopUpText && (
-        <ErrorPopUp
-          text={errorPopUpText}
-          onClose={() => setErrorPopUpText("")}
-        />
+        <ErrorPopup text={errorPopUpText} onClose={clearError} />
       )}
 
       <div className="reg-page-layout">

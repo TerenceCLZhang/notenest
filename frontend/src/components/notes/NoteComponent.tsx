@@ -4,6 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import type { Note } from "../../pages/Notes/Notes";
 import api from "../../utils/AxiosInstance";
 import DeleteConfirmationModal from "./DeleteConfirmationModal";
+import useErrorPopup from "../../hooks/useErrorPopup";
+import type { AxiosError } from "axios";
+import ErrorPopup from "../ErrorPopup";
 
 interface Props {
   item: Note;
@@ -14,18 +17,33 @@ interface Props {
 const NoteComponent = ({ item, noteToDelete, setNoteToDelete }: Props) => {
   const navigate = useNavigate();
 
+  const {
+    errorText: errorPopUpText,
+    setErrorText: setErrorPopUpText,
+    clearError,
+  } = useErrorPopup();
+
   const handleDelete = async () => {
     try {
       await api.delete(`/notes/${item._id}`);
       navigate(0);
-    } catch (error) {
-      alert("An unexpected error occured. Please try again.");
-      console.error("Failed to delete note:", error);
+    } catch (err) {
+      const error = err as AxiosError<{ error?: string }>;
+      const errorMsg =
+        error?.response?.data?.error ||
+        "Something went wrong. Please try again.";
+
+      setErrorPopUpText(errorMsg);
+      console.error(error);
     }
   };
 
   return (
     <>
+      {errorPopUpText && (
+        <ErrorPopup text={errorPopUpText} onClose={clearError} />
+      )}
+
       {noteToDelete === item && (
         <DeleteConfirmationModal
           title={item.title}

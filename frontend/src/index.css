@@ -32,6 +32,10 @@
   a {
     @apply focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-700 focus-visible:ring-offset-2;
   }
+
+  input[type="submit"] {
+    @apply disabled:bg-gray-400 disabled:text-white disabled:cursor-not-allowed disabled:opacity-60;
+  }
 }
 
 @layer components {

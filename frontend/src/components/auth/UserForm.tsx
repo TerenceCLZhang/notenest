@@ -26,7 +26,7 @@ const UserForm = ({ mode }: Props) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<Inputs>();
 
   const [formError, setFormError] = useState("");
@@ -147,6 +147,7 @@ const UserForm = ({ mode }: Props) => {
             .split(" ")
             .map((word) => word[0].toUpperCase() + word.slice(1))
             .join(" ")}
+          disabled={isSubmitting}
           className="black-btn btn-hover transition-animation form-submit-btn"
         />
       </div>
