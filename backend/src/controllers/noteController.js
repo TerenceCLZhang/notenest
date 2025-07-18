@@ -1,5 +1,22 @@
 const Note = require("../models/note");
 
+const getNote = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const note = await Note.findById(id);
+
+    // Check if note found
+    if (!note) {
+      return res.status(404).json({ error: "Note not found." });
+    }
+
+    res.json(note);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error." });
+  }
+};
+
 const getAllNotes = async (req, res) => {
   try {
     // Find all notes beloging to the user
@@ -101,4 +118,4 @@ const deleteNote = async (req, res) => {
   }
 };
 
-module.exports = { getAllNotes, createNote, updateNote, deleteNote };
+module.exports = { getNote, getAllNotes, createNote, updateNote, deleteNote };

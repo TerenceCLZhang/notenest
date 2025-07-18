@@ -1,20 +1,47 @@
 import EditNoteForm from "../../components/notes/EditNoteForm";
 import Header from "../../components/notes/Header";
-import { useLocation } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import type { Note } from "./Notes";
 import BackBtn from "../../components/notes/BackBtn";
+import { useEffect, useState } from "react";
+import api from "../../utils/AxiosInstance";
 
 const EditNote = () => {
-  const location = useLocation();
-  const { note } = location.state as { note: Note };
+  const { id } = useParams<{ id: string }>();
+  const [note, setNote] = useState<Note | null>(null);
+  const [errorLoading, setErrorLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchNote = async () => {
+      try {
+        const fetchedNote = await api.get(`/notes/${id}`);
+        console.log(fetchedNote);
+        setNote(fetchedNote.data);
+      } catch (error) {
+        setErrorLoading(true);
+      }
+    };
+
+    fetchNote();
+  }, [id]);
 
   return (
     <div className="reg-page-layout">
       <Header />
       <main className="gap-7">
-        <BackBtn />
-        <h2 className="font-bold text-3xl xl:text-5xl">Edit Note</h2>
-        <EditNoteForm note={note} />
+        {!errorLoading && <BackBtn />}
+        <h2 className="font-bold text-3xl xl:text-5xl">
+          {!errorLoading ? "Edit Note" : "Note Does Not Exist"}
+        </h2>
+        {note ? (
+          <EditNoteForm note={note} />
+        ) : errorLoading ? (
+          <Link to={"/"} className="black-btn btn-hover transition-animation">
+            Go Home
+          </Link>
+        ) : (
+          <p>Loading...</p>
+        )}
       </main>
     </div>
   );

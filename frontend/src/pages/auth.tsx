@@ -56,9 +56,15 @@ const Auth = () => {
             className="text-gray-800 hover:text-gray-500 transition-animation"
             onClick={handleChangeMode}
           >
-            {mode === "register"
-              ? "Already have an account? Log in"
-              : "Don't have an account? Register"}
+            {mode === "register" ? (
+              <>
+                Already have an account? <strong>Log in</strong>
+              </>
+            ) : (
+              <>
+                Don't have an account? <strong>Register</strong>
+              </>
+            )}
           </button>
         </footer>
       </div>
