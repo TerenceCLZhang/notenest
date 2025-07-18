@@ -15,6 +15,7 @@ import {
 type Inputs = {
   username: string;
   password: string;
+  remember: boolean;
   email?: string;
 };
 
@@ -40,6 +41,7 @@ const UserForm = ({ mode }: Props) => {
       const payload = {
         username: data.username,
         password: data.password,
+        remember: data.remember || false,
         ...(mode === "register" && { email: data.email }),
       };
 
@@ -133,6 +135,11 @@ const UserForm = ({ mode }: Props) => {
           </button>
         </div>
         {errors.password && <p className="error">{errors.password.message}</p>}
+      </div>
+
+      <div className="space-x-3">
+        <label htmlFor="remember">Remember Me:</label>
+        <input type="checkbox" id="remember" {...register("remember")} />
       </div>
 
       <div>

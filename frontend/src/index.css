@@ -60,7 +60,7 @@
   }
 
   .form {
-    @apply flex flex-col gap-5 md:gap-10;
+    @apply flex flex-col gap-5;
   }
 
   .form-input {
