@@ -100,7 +100,7 @@ const Notes = () => {
             )}
           </div>
 
-          <div className="w-full flex flex-col gap-5 lg:grid lg:grid-cols-3 lg:gap-15">
+          <div className="w-full flex flex-col gap-5 lg:grid lg:grid-cols-2 xl:grid-cols-3 lg:gap-15">
             {filteredNotes.length > 0 ? (
               filteredNotes.map((item) => (
                 <NoteComponent

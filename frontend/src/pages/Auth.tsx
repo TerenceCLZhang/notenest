@@ -32,11 +32,11 @@ const Auth = () => {
 
   return (
     <div className="lg:flex">
-      <div className="bg-[url(../images/auth/auth.jpg)] bg-cover h-[35vh] bg bg-no-repeat lg:h-screen lg:w-[40%] lg:bg-bottom"></div>
+      <div className="bg-[url(../images/auth/auth.jpg)] bg-cover bg-no-repeat bg-center min-h-screen lg:min-h-screen lg:w-[40%]"></div>
 
       <div className="py-10 p-5 lg:flex lg:flex-col lg:justify-center lg:items-center lg:w-[60%]">
-        <header className="flex flex-col gap-4">
-          <h1 className="m-auto text-4xl lg:text-6xl">
+        <header className="flex flex-col gap-4 mb-4">
+          <h1 className="m-auto text-4xl lg:text-5xl xl:text-6xl">
             <Link to="/">NoteNest</Link>
           </h1>
           <span className="text-2xl font-semibold">

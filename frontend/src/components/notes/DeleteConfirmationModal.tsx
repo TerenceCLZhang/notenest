@@ -9,7 +9,7 @@ interface Props {
 
 const DeleteConfirmationModal = ({ title, onCancel, onConfirm }: Props) => {
   return (
-    <div className="fixed top-1/2 left-1/2 -translate-1/2 z-20 bg-white px-8 py-10 rounded-lg shadow-2xl space-y-5 w-[85%] md:w-[75%] lg:w-[30%]">
+    <div className="fixed top-1/2 left-1/2 -translate-1/2 z-20 bg-white px-8 py-10 rounded-lg shadow-2xl space-y-5 w-[85%] md:w-[75%] lg:w-[50%] xl:w-[30%]">
       <div className="text-2xl flex gap-3 items-center">
         <FontAwesomeIcon
           icon={faTriangleExclamation}

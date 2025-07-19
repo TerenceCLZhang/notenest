@@ -64,7 +64,7 @@ const register = async (req, res) => {
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: isProduction,
-        sameSite: isProduction ? "Strict" : "Lax",
+        sameSite: isProduction ? "None" : "Lax",
         maxAge: COOKIE_MAX_AGE,
       })
       .json({
@@ -111,7 +111,7 @@ const login = async (req, res) => {
     .cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: isProduction,
-      sameSite: isProduction ? "Strict" : "Lax",
+      sameSite: isProduction ? "None" : "Lax",
       maxAge: COOKIE_MAX_AGE,
     })
     .json({ message: "Successfully logged in", accessToken });
@@ -145,7 +145,7 @@ const logout = async (req, res) => {
     res.clearCookie("refreshToken", {
       httpOnly: true,
       secure: isProduction,
-      sameSite: isProduction ? "Strict" : "Lax",
+      sameSite: isProduction ? "None" : "Lax",
     });
 
     res.sendStatus(204);
