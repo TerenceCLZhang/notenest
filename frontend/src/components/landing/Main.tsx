@@ -12,7 +12,7 @@ const Main = () => {
         <span className="subheading-main">Your ideas in one place.</span>
         <Link
           to="/auth?mode=register"
-          className="block m-auto mt-5 black-btn btn-hover transition-animation"
+          className="block m-auto mt-5 md:mt-10 black-btn btn-hover transition-animation"
         >
           Get Started Today
         </Link>
