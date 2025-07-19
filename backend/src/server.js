@@ -1,7 +1,9 @@
+require("dotenv").config();
+
 const mongoose = require("mongoose");
 
 const app = require("./app");
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 // Connect to database
 const DB_URI = `mongodb+srv://terencezhang:${process.env.MONGO_ATLAS_PASSWORD}@personal-notes-app.zayv1ve.mongodb.net/app?retryWrites=true&w=majority&appName=personal-notes-app`;
