@@ -137,9 +137,14 @@ const UserForm = ({ mode }: Props) => {
         {errors.password && <p className="error">{errors.password.message}</p>}
       </div>
 
-      <div className="space-x-3">
+      <div className="flex items-center space-x-3">
         <label htmlFor="remember">Remember Me:</label>
-        <input type="checkbox" id="remember" {...register("remember")} />
+        <input
+          type="checkbox"
+          id="remember"
+          {...register("remember")}
+          className="h-4 w-4 rounded border-gray-300 accent-black cursor-pointer"
+        />
       </div>
 
       <div>
