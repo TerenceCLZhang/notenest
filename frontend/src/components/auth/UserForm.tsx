@@ -23,6 +23,8 @@ interface Props {
   mode: "register" | "login";
 }
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const UserForm = ({ mode }: Props) => {
   const {
     register,
@@ -46,7 +48,7 @@ const UserForm = ({ mode }: Props) => {
       };
 
       const response = await axios.post(
-        `http://localhost:8080/auth/${mode}`,
+        `${API_BASE_URL}/auth/${mode}`,
         payload,
         { withCredentials: true }
       );

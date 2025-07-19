@@ -3,8 +3,10 @@ import { store } from "../state/store";
 import { clearAccessToken, setAccessToken } from "../state/accessTokenSlice";
 import { clearUsername } from "../state/userSlice";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const api = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: API_BASE_URL,
   withCredentials: true,
 });
 
@@ -35,7 +37,7 @@ api.interceptors.response.use(
       try {
         // Refresh token
         const refreshResponse = await axios.post(
-          "http://localhost:8080/auth/token",
+          `${API_BASE_URL}/auth/token`,
           {},
           { withCredentials: true }
         );

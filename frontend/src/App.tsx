@@ -13,6 +13,8 @@ import { clearAccessToken, setAccessToken } from "./state/accessTokenSlice";
 import { clearUsername, setUsername } from "./state/userSlice";
 import type { RootState } from "./state/store";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 function App() {
   const dispatch = useDispatch();
   const token = useSelector((state: RootState) => state.accessToken.token);
@@ -28,7 +30,7 @@ function App() {
       // Get new access token and user information when the user refreshes page
       try {
         const res = await axios.post(
-          "http://localhost:8080/auth/token",
+          `${API_BASE_URL}/auth/token`,
           {},
           { withCredentials: true }
         );
