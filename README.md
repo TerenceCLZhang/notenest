@@ -16,6 +16,7 @@ _Note: The backend is hosted on Render's free tier, which may take 50 seconds or
 - **CRUD for Notes** - Users can create, view, edit, and delete personal notes through a responsive and intuitive interface.
 - **User-Specific Data Access** - Each user can access only their own notes. All note-related operations are securely scoped to the authenticated user.
 - **Search Functionality** – Quickly find notes with a built-in search feature for efficient navigation
+- **Light and Dark Mode** – Seamlessly switch between light and dark themes to match your environment or preference.
 
 ## Tech Stack
 

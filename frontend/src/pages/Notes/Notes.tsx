@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faL,
   faMagnifyingGlass,
   faPlus,
   faXmark,
@@ -27,6 +28,7 @@ const Notes = () => {
   const [notes, setNotes] = useState<Note[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [noteToDelete, setNoteToDelete] = useState<Note | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const {
     errorText: errorPopUpText,
@@ -37,6 +39,7 @@ const Notes = () => {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
+        setLoading(true);
         const response = await api.get("/notes");
         setNotes(response.data);
       } catch (err) {
@@ -48,6 +51,8 @@ const Notes = () => {
         setErrorPopUpText(errorMsg);
         console.error(error);
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -100,33 +105,37 @@ const Notes = () => {
             )}
           </div>
 
-          <div className="w-full flex flex-col gap-5 lg:grid lg:grid-cols-2 xl:grid-cols-3 lg:gap-15">
-            {filteredNotes.length > 0 ? (
-              filteredNotes.map((item) => (
-                <NoteComponent
-                  key={item._id}
-                  item={item}
-                  noteToDelete={noteToDelete}
-                  setNoteToDelete={setNoteToDelete}
-                />
-              ))
-            ) : searchQuery ? (
-              <div className="col-span-full text-center text-gray-600 text-lg italic dark:text-white">
-                No results found for "
-                <span className="font-semibold">{searchQuery}</span>"
-              </div>
-            ) : null}
-            {!searchQuery && (
-              <Link
-                to="/notes/create"
-                className="flex items-center justify-center border border-gray-500 min-h-50 lg:min-h-75 h-full w-full border-dotted rounded-2xl hover:border-black hover:border-2 hover:font-bold transition-animation"
-              >
-                <span className="">
-                  Create New Note <FontAwesomeIcon icon={faPlus} />
-                </span>
-              </Link>
-            )}
-          </div>
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
+            <div className="w-full flex flex-col gap-5 lg:grid lg:grid-cols-2 xl:grid-cols-3 lg:gap-15">
+              {filteredNotes.length > 0 ? (
+                filteredNotes.map((item) => (
+                  <NoteComponent
+                    key={item._id}
+                    item={item}
+                    noteToDelete={noteToDelete}
+                    setNoteToDelete={setNoteToDelete}
+                  />
+                ))
+              ) : searchQuery ? (
+                <div className="col-span-full text-center text-gray-600 text-lg italic dark:text-white">
+                  No results found for "
+                  <span className="font-semibold">{searchQuery}</span>"
+                </div>
+              ) : null}
+              {!searchQuery && (
+                <Link
+                  to="/notes/create"
+                  className="flex items-center justify-center border border-gray-500 min-h-50 lg:min-h-75 h-full w-full border-dotted rounded-2xl hover:border-black hover:border-2 hover:font-bold transition-animation dark:border-gray-300 dark:hover:border-white"
+                >
+                  <span className="">
+                    Create New Note <FontAwesomeIcon icon={faPlus} />
+                  </span>
+                </Link>
+              )}
+            </div>
+          )}
         </main>
       </div>
     </>
