@@ -6,48 +6,15 @@ import CreateNote from "./pages/Notes/CreateNote";
 import EditNote from "./pages/Notes/EditNote";
 import NotFound from "./pages/NotFound";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { clearAccessToken, setAccessToken } from "./state/accessTokenSlice";
-import { clearUsername, setUsername } from "./state/userSlice";
-import type { RootState } from "./state/store";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import useThemeLoader from "./hooks/useThemeLoader";
+import useAccessToken from "./hooks/useAccessToken";
+import Loading from "./pages/Loading";
 
 function App() {
-  const dispatch = useDispatch();
-  const token = useSelector((state: RootState) => state.accessToken.token);
-  const [loading, setLoading] = useState(true); // To block UI until refresh finishes
+  useThemeLoader();
+  const { loading } = useAccessToken();
 
-  useEffect(() => {
-    const refresh = async () => {
-      if (token) {
-        setLoading(false); // Token already exists, no need to refresh
-        return;
-      }
-
-      // Get new access token and user information when the user refreshes page
-      try {
-        const res = await axios.post(
-          `${API_BASE_URL}/auth/token`,
-          {},
-          { withCredentials: true }
-        );
-        dispatch(setAccessToken(res.data.accessToken));
-        dispatch(setUsername(res.data.user.username));
-      } catch (error) {
-        dispatch(clearAccessToken());
-        dispatch(clearUsername());
-      } finally {
-        setLoading(false); // Always end loading
-      }
-    };
-
-    refresh();
-  }, []);
-
-  if (loading) return <div>Loading...</div>; // prevent premature render
+  if (loading) return <Loading />; // prevent premature render
 
   return (
     <Routes>

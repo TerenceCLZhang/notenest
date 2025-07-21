@@ -63,7 +63,7 @@ const Notes = () => {
   return (
     <>
       {noteToDelete && (
-        <div className="fixed top-0 left-0 h-full w-full bg-black/50 z-10"></div>
+        <div className="fixed top-0 left-0 h-full w-full bg-black/50 z-10 dark:bg-gray-700/50"></div>
       )}
 
       {errorPopUpText && (
@@ -92,7 +92,7 @@ const Notes = () => {
               <button
                 type="button"
                 aria-label="Clear search"
-                className="hover:text-red-800 transition-animation absolute right-5 top-1/2 -translate-1/2"
+                className="hover:text-red-800 transition-animation absolute right-5 top-1/2 -translate-1/2 dark:hover:text-red-500"
                 onClick={() => setSearchQuery("")}
               >
                 <FontAwesomeIcon icon={faXmark} />
@@ -111,7 +111,7 @@ const Notes = () => {
                 />
               ))
             ) : searchQuery ? (
-              <div className="col-span-full text-center text-gray-600 text-lg italic">
+              <div className="col-span-full text-center text-gray-600 text-lg italic dark:text-white">
                 No results found for "
                 <span className="font-semibold">{searchQuery}</span>"
               </div>

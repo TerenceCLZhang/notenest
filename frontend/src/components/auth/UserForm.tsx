@@ -124,7 +124,7 @@ const UserForm = ({ mode }: Props) => {
           />
           <button
             type="button"
-            className="absolute right-5 top-1/2 -translate-y-1/2 hover:text-gray-600 transition-animation"
+            className="absolute right-5 top-1/2 -translate-y-1/2 hover:text-gray-600 transition-animation dark:text-gray-300"
             onClick={() => setShowPassword(!showPassword)}
             aria-label={showPassword ? "Hide password" : "Show password"}
             title={showPassword ? "Hide password" : "Show password"}
@@ -145,7 +145,7 @@ const UserForm = ({ mode }: Props) => {
           type="checkbox"
           id="remember"
           {...register("remember")}
-          className="h-4 w-4 rounded border-gray-300 accent-black cursor-pointer"
+          className="h-4 w-4 rounded border-gray-300 accent-black cursor-pointer dark:border-gray-900 dark:accent-gray-300"
         />
       </div>
 

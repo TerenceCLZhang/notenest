@@ -52,12 +52,12 @@ const NoteComponent = ({ item, noteToDelete, setNoteToDelete }: Props) => {
         />
       )}
 
-      <section className="flex flex-col gap-5 justify-between shadow-md rounded-2xl p-6 md:p-8 lg:p-10 border border-gray-300 h-full w-full min-h-50 lg:min-h-75">
+      <section className="flex flex-col gap-5 justify-between shadow-md rounded-2xl p-6 md:p-8 lg:p-10 border border-gray-300 h-full w-full min-h-50 lg:min-h-75 dark:bg-gray-900 dark:border-gray-700">
         <div className="space-y-4">
-          <h2 className="text-xl md:text-2xl font-semibold text-gray-800 break-words whitespace-pre-wrap">
+          <h2 className="text-xl md:text-2xl font-semibold text-gray-800 break-words whitespace-pre-wrap dark:text-white">
             {item.title}
           </h2>
-          <p className="text-gray-700 leading-relaxed break-words whitespace-pre-wrap">
+          <p className="text-gray-700 leading-relaxed break-words whitespace-pre-wrap dark:text-white">
             {item.content}
           </p>
         </div>
@@ -72,7 +72,7 @@ const NoteComponent = ({ item, noteToDelete, setNoteToDelete }: Props) => {
           <button
             type="button"
             onClick={() => setNoteToDelete(item)}
-            className="hover:text-red-800 hover:opacity-95 transition-animation"
+            className="hover:text-red-800 hover:opacity-95 transition-animation dark:hover:text-red-500"
           >
             <FontAwesomeIcon icon={faTrash} /> Delete
           </button>

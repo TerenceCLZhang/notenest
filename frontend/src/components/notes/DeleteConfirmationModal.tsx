@@ -9,11 +9,11 @@ interface Props {
 
 const DeleteConfirmationModal = ({ title, onCancel, onConfirm }: Props) => {
   return (
-    <div className="fixed top-1/2 left-1/2 -translate-1/2 z-20 bg-white px-8 py-10 rounded-lg shadow-2xl space-y-5 w-[85%] md:w-[75%] lg:w-[50%] xl:w-[30%]">
+    <div className="fixed top-1/2 left-1/2 -translate-1/2 z-20 bg-white px-8 py-10 rounded-lg shadow-2xl space-y-5 w-[85%] md:w-[75%] lg:w-[50%] xl:w-[30%] dark:bg-gray-950">
       <div className="text-2xl flex gap-3 items-center">
         <FontAwesomeIcon
           icon={faTriangleExclamation}
-          className="text-red-800"
+          className="text-red-800 dark:text-red-500"
         />
         <h2 className="font-bold">Delete Note</h2>
       </div>
@@ -32,7 +32,7 @@ const DeleteConfirmationModal = ({ title, onCancel, onConfirm }: Props) => {
         <button
           type="button"
           onClick={onConfirm}
-          className="hover:text-red-800 transition-animation"
+          className="hover:text-red-800 transition-animation dark:hover:text-red-500"
         >
           Delete
         </button>

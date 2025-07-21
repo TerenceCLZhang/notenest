@@ -53,7 +53,9 @@ const CreateNewNoteForm = () => {
         <div className="form-input">
           <label htmlFor="title">
             <span>Title:</span>{" "}
-            <span className="text-sm text-gray-500">(Max: 100 characters)</span>
+            <span className="text-sm text-gray-500 dark:text-gray-300">
+              (Max: 100 characters)
+            </span>
           </label>
           <input
             type="text"
