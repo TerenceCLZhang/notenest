@@ -13,12 +13,10 @@ const generateAccessToken = (user) => {
   });
 };
 
-const generateRefreshToken = async (user) => {
-  const token = jwt.sign(
-    { username: user.username },
-    process.env.JWT_REFRESH_SECRET
-  );
-  return token;
+const generateRefreshToken = (user) => {
+  return jwt.sign({ username: user.username }, process.env.JWT_REFRESH_SECRET, {
+    expiresIn: "7d",
+  });
 };
 
 const register = async (req, res) => {
