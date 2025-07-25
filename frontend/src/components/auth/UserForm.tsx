@@ -16,7 +16,6 @@ type Inputs = {
   username: string;
   password: string;
   remember: boolean;
-  email?: string;
 };
 
 interface Props {
@@ -44,7 +43,6 @@ const UserForm = ({ mode }: Props) => {
         username: data.username,
         password: data.password,
         remember: data.remember || false,
-        ...(mode === "register" && { email: data.email }),
       };
 
       const response = await axios.post(
@@ -93,25 +91,6 @@ const UserForm = ({ mode }: Props) => {
         />
         {errors.username && <p className="error">{errors.username.message}</p>}
       </div>
-
-      {mode === "register" && (
-        <div className="form-input">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="text"
-            inputMode="email"
-            id="email"
-            {...register("email", {
-              required: "Email is required.",
-              pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                message: "Please enter a valid email address.",
-              },
-            })}
-          />
-          {errors.email && <p className="error">{errors.email.message}</p>}
-        </div>
-      )}
 
       <div className="form-input">
         <label htmlFor="password">Password:</label>

@@ -20,13 +20,13 @@ const generateRefreshToken = (user) => {
 };
 
 const register = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, password } = req.body;
 
   // Check if username and password in body
-  if (!(username && email && password)) {
+  if (!(username && password)) {
     return res
       .status(400)
-      .json({ error: "Request must contain a username, email, and password." });
+      .json({ error: "Request must contain a username, and password." });
   }
 
   // Check if username has a length of at least 3
@@ -41,17 +41,11 @@ const register = async (req, res) => {
       return res.status(400).json({ error: "Username already taken." });
     }
 
-    // Check if email is taken
-    const emailTaken = await User.findOne({ email });
-    if (emailTaken) {
-      return res.status(400).json({ error: "Email already registered." });
-    }
-
     // Hash password + salt
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create and save user
-    const newUser = new User({ username, email, password: hashedPassword });
+    const newUser = new User({ username, password: hashedPassword });
     await newUser.save();
 
     // Create JWT after user is created
@@ -140,12 +134,7 @@ const token = async (req, res) => {
 
 const logout = async (req, res) => {
   try {
-    res.clearCookie("refreshToken", {
-      httpOnly: true,
-      secure: isProduction,
-      sameSite: isProduction ? "None" : "Lax",
-    });
-
+    res.clearCookie("refreshToken");
     res.sendStatus(204);
   } catch (error) {
     res.status(500).json({ error: "Internal server error." });
