@@ -1,7 +1,7 @@
-import main from "../../images/landing/main.jpg";
-import fastCapture from "../../images/landing/fast_capture.jpg";
-import smartOrganization from "../../images/landing/smart_organization.jpg";
-import accessAnywhere from "../../images/landing/access_anywhere.jpg";
+import main from "/images/landing/main.jpg";
+import fastCapture from "/images/landing/fast_capture.jpg";
+import smartOrganization from "/images/landing/smart_organization.jpg";
+import accessAnywhere from "/images/landing/access_anywhere.jpg";
 import { Link } from "react-router-dom";
 
 const Main = () => {

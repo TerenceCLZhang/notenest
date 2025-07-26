@@ -32,7 +32,7 @@ const Auth = () => {
 
   return (
     <div className="lg:flex">
-      <div className="bg-[url(src/images/auth/auth.jpg)] bg-cover bg-no-repeat bg-center h-[35vh] lg:min-h-screen lg:w-[40%]"></div>
+      <div className="bg-[url(/images/auth/auth.jpg)] bg-cover bg-no-repeat bg-center h-[35vh] lg:min-h-screen lg:w-[40%]"></div>
 
       <div className="py-10 p-5 lg:flex lg:flex-col lg:justify-center lg:items-center lg:w-[60%]">
         <header className="flex flex-col gap-4 mb-4">
