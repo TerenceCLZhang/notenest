@@ -5,10 +5,8 @@ const mongoose = require("mongoose");
 const app = require("./app");
 const PORT = process.env.PORT || 8080;
 
-// Connect to database
-const DB_URI = `mongodb+srv://terencezhang:${process.env.MONGO_ATLAS_PASSWORD}@personal-notes-app.zayv1ve.mongodb.net/app?retryWrites=true&w=majority&appName=personal-notes-app`;
 mongoose
-  .connect(DB_URI)
+  .connect(process.env.DB_URI)
   .then(() => {
     console.log("Connected to database.");
 
